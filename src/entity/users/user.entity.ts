@@ -1,46 +1,47 @@
 import { BaseEntity } from '@app/entity/base.entity';
 import { DeepPartial, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { Column } from 'typeorm';
-import { UserMeta, Comment } from '@app/entity';
 
 @Entity('users')
 export class User extends BaseEntity {
+
   constructor(input?: DeepPartial<User>) {
     super(input);
   }
-
-  @Column({ unique: true })
-  identifier: string;
 
   @Column({
     type: 'varchar',
     length: 100,
     nullable: true,
   })
-  displayName: string;
-  @Column({ select: false, nullable: true })
-  passwordHash: string;
+  nickName: string;
 
-  @Column({ default: false })
-  verified?: boolean;
+  @Column()
+  gender: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  verificationToken?: string | null;
+  @Column({type: 'varchar'})
+  openId: string;
 
-  /**
-   * @description
-   * 用于更新用户标识的令牌,通常是一个邮件地址
-   */
-  @Column({ type: 'varchar', nullable: true })
-  identifierChangeToken?: string | null;
+  @Column({ type: 'varchar',nullable:true,length:256 })
+  avatarUrl?: string;
 
-  @OneToMany(type => UserMeta, userMeta => userMeta.user, {
-    cascade: true,
-  })
-  metas?: UserMeta[];
+  @Column({ type: 'varchar',nullable:true,length:50 })
+  country?: string;
 
-  @OneToMany(type => Comment, comment => comment.user, {
-    cascade: true,
-  })
-  comments?: Comment[];
+  @Column({ type: 'varchar',nullable:true,length:50 })
+  province?: string;
+
+  @Column({ type: 'varchar',nullable:true,length:50 })
+  city?: string;
+
+  @Column({ type: 'varchar',nullable:true,length:20 })
+  phoneNumber?: string;
+  
+  @Column()
+  status: number;
+  
+  // @OneToMany(type => Comment, comment => comment.user, {
+  //   cascade: true,
+  // })
+  // comments?: Comment[];
 }

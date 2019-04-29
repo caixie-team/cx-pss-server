@@ -1,8 +1,8 @@
 {
-  "name": "picker-server",
+  "name": "cx-pss-server",
   "version": "2.0.0",
-  "description": "A Miniprogram podcast server.",
-  "author": "",
+  "description": "A Miniprogram pss server.",
+  "author": "longjl@caixie.top",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

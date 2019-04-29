@@ -3,8 +3,8 @@ import { InjectConnection } from '@nestjs/typeorm';
 import { User } from '@app/entity';
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-// import {CreateUserInput} from '@app/modules/users/user.interface';
-import { CreateUserDto } from '@app/modules/users/user.dto';
+// import {User} from '@app/modules/users/user.interface';
+import { CreateUserDto } from '@app/modules/users/dto/create-user.dto';
 import { patchEntity } from '@app/service/helpers/utils/patch-entity';
 import { ID } from '@app/common/shared-types';
 
@@ -16,28 +16,40 @@ export class UserService {
   ) {
   }
 
-  public create(newUser: CreateUserDto): Promise<User> {
-    return this.userRepository.save(newUser).then(user => {
-      return user;
-    });
+  async create(dto: CreateUserDto): Promise<User> {
+    console.log(dto)
+    const newUser = new User();
+    newUser.nickName = dto.nickName;
+    newUser.gender = dto.gender | 0;//性别 0：未知、1：男、2：女
+    newUser.avatarUrl = dto.avatarUrl;
+    newUser.country = dto.country;
+    newUser.province = dto.province;
+    newUser.city = dto.city;
+    newUser.phoneNumber = dto.phoneNumber;
+    newUser.status = 1;//用户状态: 0:禁用 1:正常
+    newUser.createdAt = new Date();
+    newUser.updatedAt = new Date();
+    const res = await this.userRepository.save(newUser);
+    console.log(res)
+    return res;
   }
 
-  async createOrUpdate(input: Partial<CreateUserDto>): Promise<User> {
-    let user: User;
-    const existing = await this.userRepository.findOne({
-      where: {
-        identifier: input.identifier,
-      },
-    });
-    if (existing) {
-      user = patchEntity(existing, input);
-      // user = new Users(input);
-    } else {
-      user = new User(input);
-    }
+  // async createOrUpdate(input: Partial<CreateUserDto>): Promise<User> {
+  //   let user: User;
+  //   const existing = await this.userRepository.findOne({
+  //     where: {
+  //       identifier: input.identifier,
+  //     },
+  //   });
+  //   if (existing) {
+  //     user = patchEntity(existing, input);
+  //     // user = new Users(input);
+  //   } else {
+  //     user = new User(input);
+  //   }
 
-    return this.userRepository.save(user);
-  }
+  //   return this.userRepository.save(user);
+  // }
 
   // public update(user: Users): Promise<Users> {
   // return this.userRepository.save(newUser).then(user => {
@@ -45,33 +57,24 @@ export class UserService {
   // });
   // }
 
-// 创建几个相片
-//   let photo = new Photo();
-//   photo.name = "Me and Bears";
-//   photo.description = "I am near polar bears";
-//   photo.filename = "photo-with-bears.jpg";
-//   photo.albums = [album1, album2];
-//   await connection.manager.save(photo);
+  // 创建几个相片
   async updateUser(user: User): Promise<User> {
     return await this.userRepository.save(user);
-    // this.connection.getRepository(UserMeta).save()
   }
 
-  public getDetailById(id: number): Promise<User> {
-    return this.userRepository.findOne({
-      relations: ['metas'],
-      where: {
-        id,
-      },
-    });
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
-  findByIdentifier(identifier: string): Promise<User> {
-    return this.userRepository.findOne({
-      relations: ['metas'],
-      where: {
-        identifier,
-      },
-    });
-  }
+
+  // public getDetailById(id: number): Promise<User> {
+  //   return this.userRepository.findOne({
+  //     relations: ['metas'],
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // }
+
+
 }

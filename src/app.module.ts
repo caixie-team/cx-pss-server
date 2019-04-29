@@ -20,7 +20,6 @@ import { HelperModule } from '@app/processors/helper/helper.module';
 import { AuthModule } from '@app/modules/auth/auth.module';
 import { UserModule } from '@app/modules/users/user.module';
 import { WechatModule } from '@app/modules/wechat/wechat.module';
-import { PostModule } from '@app/modules/posts/post.module';
 // import { AuthService } from '@app/modules/auth/auth.service';
 // import { UserService } from '@app/modules/users/users.service';
 
@@ -29,11 +28,11 @@ import { PostModule } from '@app/modules/posts/post.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      // port: 3306,
-      port: 3399,
+      port: 3306,
+      // port: 3399,
       username: 'root',
       password: 'abcd1234',
-      database: 'podcast',
+      database: 'pss',
       entities: [__dirname + '/**/*.entity.ts'],
       logging: true,
       synchronize: true,
@@ -44,8 +43,6 @@ import { PostModule } from '@app/modules/posts/post.module';
     AuthModule,
     UserModule,
     WechatModule,
-    // 内容模块
-    PostModule,
   ],
   controllers: [AppController],
   providers: [

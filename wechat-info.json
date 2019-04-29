@@ -1,6 +1,6 @@
 {
   "wechatConfig": {
-    "store": "FileStore_/Users/baisheng/Workspace/podcast-server/wechat-info.json"
+    "store": "FileStore_/Users/longjianlin/Documents/08-caixie/cx-pss-server/wechat-info.json"
   },
   "globalToken": {
     "count": 0
