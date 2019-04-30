@@ -1,6 +1,7 @@
 import { BaseEntity } from '@app/entity/base.entity';
 import { DeepPartial, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { Column } from 'typeorm';
+import { UserShop } from '@app/entity/shops/user-shop.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -40,8 +41,8 @@ export class User extends BaseEntity {
   @Column()
   status: number;
   
-  // @OneToMany(type => Comment, comment => comment.user, {
-  //   cascade: true,
-  // })
-  // comments?: Comment[];
+  @OneToMany(type => UserShop, userShop => userShop.user, {
+    cascade: true,
+  })
+  userShops?: UserShop[];
 }

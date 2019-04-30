@@ -21,6 +21,7 @@ export class UserService {
     const newUser = new User();
     newUser.nickName = dto.nickName;
     newUser.gender = dto.gender | 0;//性别 0：未知、1：男、2：女
+    newUser.openId = dto.openId;
     newUser.avatarUrl = dto.avatarUrl;
     newUser.country = dto.country;
     newUser.province = dto.province;
@@ -30,8 +31,15 @@ export class UserService {
     newUser.createdAt = new Date();
     newUser.updatedAt = new Date();
     const res = await this.userRepository.save(newUser);
-    console.log(res)
     return res;
+  }
+
+  async findById(id: number): Promise<User> {
+    return await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   // async createOrUpdate(input: Partial<CreateUserDto>): Promise<User> {

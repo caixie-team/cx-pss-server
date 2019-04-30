@@ -1,4 +1,4 @@
-export interface User {
+export interface UserData {
      nickName: string;
      gender: number;
      openId: string;

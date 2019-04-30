@@ -23,6 +23,8 @@ import { WechatModule } from '@app/modules/wechat/wechat.module';
 // import { AuthService } from '@app/modules/auth/auth.service';
 // import { UserService } from '@app/modules/users/users.service';
 
+import {ShopModule} from '@app/modules/shops/shop.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -40,9 +42,10 @@ import { WechatModule } from '@app/modules/wechat/wechat.module';
     }),
     CacheModule,
     HelperModule,
-    AuthModule,
+    // AuthModule,
     UserModule,
-    WechatModule,
+    // WechatModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [
